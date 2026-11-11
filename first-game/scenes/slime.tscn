@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://60srmp8f1guv"]
+
+[ext_resource type="Texture2D" uid="uid://b7xulxkffdfc3" path="res://assets/sprites/slime_green.png" id="1_p2gj0"]
+[ext_resource type="PackedScene" uid="uid://btvetxn3a0nfn" path="res://scenes/killzone.tscn" id="2_n6pvg"]
+
+[sub_resource type="GDScript" id="GDScript_4nkto"]
+script/source = "extends Node2D
+
+@onready var ray_cast_right: RayCast2D = $RayCastRight
+@onready var ray_cast_left: RayCast2D = $RayCastLeft
+
+var direction = 1
+const SPEED = 100
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	if ray_cast_left.is_colliding():
+		direction = 1 
+	elif ray_cast_right.is_colliding():
+		direction = -1
+	
+	position.x += SPEED * delta * direction
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pjw23"]
+atlas = ExtResource("1_p2gj0")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2npkn"]
+atlas = ExtResource("1_p2gj0")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fd6lc"]
+atlas = ExtResource("1_p2gj0")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gstla"]
+atlas = ExtResource("1_p2gj0")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ybpth"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pjw23")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2npkn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fd6lc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gstla")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7jsx6"]
+radius = 7.0
+height = 14.0
+
+[node name="Slime" type="Node2D" unique_id=1198755342]
+script = SubResource("GDScript_4nkto")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=419501985]
+sprite_frames = SubResource("SpriteFrames_ybpth")
+autoplay = "default"
+
+[node name="Killzone" parent="." unique_id=2016186194 instance=ExtResource("2_n6pvg")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone" unique_id=1091570498]
+position = Vector2(0, 6)
+shape = SubResource("CapsuleShape2D_7jsx6")
+
+[node name="RayCastRight" type="RayCast2D" parent="." unique_id=1083553291]
+position = Vector2(1, 7)
+target_position = Vector2(12, 0)
+
+[node name="RayCastLeft" type="RayCast2D" parent="." unique_id=1505379063]
+position = Vector2(1, 7)
+target_position = Vector2(-14, 0)

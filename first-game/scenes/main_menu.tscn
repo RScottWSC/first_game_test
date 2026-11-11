@@ -1,0 +1,90 @@
+[gd_scene format=3 uid="uid://cq4s2c577g325"]
+
+[ext_resource type="FontFile" uid="uid://c0udlrmuadkt6" path="res://assets/fonts/PixelOperator8.ttf" id="1_l6cm7"]
+
+[sub_resource type="GDScript" id="GDScript_l6cm7"]
+script/source = "extends Control
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	visible = false
+
+
+func _on_restart_button_pressed() -> void:
+	get_tree().paused = false
+	get_tree().reload_current_scene()
+
+
+func _on_exit_button_pressed() -> void:
+	get_tree().quit()
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if event.is_action_pressed(\"menu\"):
+		toggle_menu()
+
+func toggle_menu():
+	# Show/hide menu
+	visible = !visible
+	# Pause/unpause
+	get_tree().paused = visible
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7jsx6"]
+bg_color = Color(0, 0.3019608, 0, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[node name="Main Menu" type="Control" unique_id=2026759437]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_l6cm7")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1859875071]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.58431375)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1427935440]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -242.0
+offset_top = -117.5
+offset_right = 242.0
+offset_bottom = 117.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RestartButton" type="Button" parent="VBoxContainer" unique_id=520332161]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("1_l6cm7")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_7jsx6")
+text = "Restart"
+
+[node name="ExitButton" type="Button" parent="VBoxContainer" unique_id=863133467]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("1_l6cm7")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_7jsx6")
+text = "Exit"
+
+[connection signal="pressed" from="VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]

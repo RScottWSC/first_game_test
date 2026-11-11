@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://btvetxn3a0nfn"]
+
+[sub_resource type="GDScript" id="GDScript_ybpth"]
+script/source = "extends Area2D
+
+
+
+func _on_body_entered(body: Node2D) -> void:
+	get_tree().reload_current_scene()
+"
+
+[node name="Killzone" type="Area2D" unique_id=2016186194]
+collision_mask = 2
+script = SubResource("GDScript_ybpth")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

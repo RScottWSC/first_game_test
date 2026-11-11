@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://p8lscf1t23sd"]
+
+[ext_resource type="Texture2D" uid="uid://cjbdxkwp8iiq3" path="res://assets/sprites/coin.png" id="1_ahhtf"]
+
+[sub_resource type="GDScript" id="GDScript_ahhtf"]
+script/source = "extends Control
+
+@onready var coin_label: Label = $CoinTexture/CoinLabel
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+func update_score(score):
+	coin_label.text = str(score)
+	print(\"Coin label has been updated!\")
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ybpth"]
+atlas = ExtResource("1_ahhtf")
+region = Rect2(0, 0, 16, 16)
+
+[node name="HUD" type="Control" unique_id=220697305]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_ahhtf")
+
+[node name="CoinTexture" type="TextureRect" parent="." unique_id=456311750]
+layout_mode = 0
+offset_right = 101.0
+offset_bottom = 101.0
+texture = SubResource("AtlasTexture_ybpth")
+
+[node name="CoinLabel" type="Label" parent="CoinTexture" unique_id=1069060959]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 20.0
+offset_right = 78.0
+offset_bottom = 83.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 45
+text = "0"
+horizontal_alignment = 1
